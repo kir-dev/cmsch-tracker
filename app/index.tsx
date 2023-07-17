@@ -55,7 +55,7 @@ export default function Index() {
         <ScreenTitle>B(e)acon</ScreenTitle>
         <SettingsButton />
       </TitleBar>
-      <ToggleButton state={state} onPress={() => setState((cs) => !cs)} />
+      <ToggleButton disabled={!key || !endpoint} state={state} onPress={() => setState((cs) => !cs)} />
       <DataDisplay location={location} visible={state} />
     </Screen>
   );
