@@ -40,12 +40,10 @@ export default function Index() {
   }, []);
 
   useEffect(() => {
-    console.log('Set key to', key);
     publishService.setKey(key);
   }, [key]);
 
   useEffect(() => {
-    console.log('Set endpoint to', endpoint);
     publishService.setEndpoint(endpoint);
   }, [endpoint]);
 

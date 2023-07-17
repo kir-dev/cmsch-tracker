@@ -11,7 +11,7 @@ type SettingsContextType = {
 
 export const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
-const STORAGE_KEY = '@cmsch-beacon';
+const STORAGE_KEY = '@cmsch-tracker';
 
 export function SettingsProvider({ children }: PropsWithChildren) {
   const [endpoint, setEndpoint] = useState<SettingsContextType['endpoint']>('');

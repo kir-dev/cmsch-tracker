@@ -10,6 +10,10 @@ import { SettingsProvider } from '../components/SettingsContext';
 
 export { ErrorBoundary } from '../components/ErrorBoundary';
 
+const queryClient = new QueryClient();
+
+SplashScreen.preventAutoHideAsync();
+
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     OpenSans: require('../assets/fonts/OpenSans-Regular.ttf'),
@@ -22,22 +26,13 @@ export default function RootLayout() {
     if (error) throw error;
   }, [error]);
 
-  return (
-    <>
-      {!loaded && <SplashScreen />}
-      {loaded && <RootLayoutNav />}
-    </>
-  );
-}
+  useEffect(() => {
+    if (loaded) SplashScreen.hideAsync();
+  }, [loaded]);
 
-export const unstable_settings = {
-  initialRouteName: 'index',
-};
-
-const queryClient = new QueryClient();
-
-function RootLayoutNav() {
   const colorScheme = useColorScheme();
+
+  if (!loaded) return null;
 
   return (
     <QueryClientProvider client={queryClient}>
