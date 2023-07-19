@@ -12,8 +12,8 @@ const server = http.createServer((req, res) => {
     console.log('Request body:', requestBody);
 
     res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello, World!');
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({ status: 'Test Status', group: 'Test Group' }, null, 3));
   });
 });
 
