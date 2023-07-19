@@ -1,29 +1,36 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { isAxiosError } from 'axios';
 import { LocationObject } from 'expo-location';
 
+import { LocationApiResponse } from '../types/locationResponse.type';
 import { LocationSubscriber } from '../types/locationSubscriber.type';
 
 export class PublishService implements LocationSubscriber {
-  private axiosInstance: AxiosInstance;
   private endpoint: string | undefined;
   private key: string | undefined;
 
-  constructor() {
-    this.axiosInstance = axios.create();
-  }
+  constructor(private onResponse: (responseData: LocationApiResponse) => void) {}
 
   setEndpoint(endpoint: string) {
     this.endpoint = endpoint;
-    this.axiosInstance.defaults.baseURL = endpoint;
-    console.log(this.axiosInstance.defaults.baseURL);
   }
 
   setKey(key: string) {
     this.key = key;
-    this.axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + key;
   }
 
-  sendLocation({ coords: { accuracy, latitude, longitude } }: LocationObject) {
-    this.axiosInstance.post('', { accuracy, latitude, longitude }).catch(console.error);
+  sendLocation({ coords: { accuracy = 0, latitude, longitude, altitude = 0 } }: LocationObject) {
+    if (!this.endpoint || !this.key) throw new Error('Kulcs vagy végpont hiányzik');
+    axios
+      .post<LocationApiResponse>(
+        this.endpoint,
+        { accuracy, latitude, longitude, altitude, token: this.key },
+        { headers: { 'Content-Type': 'application/json' } }
+      )
+      .then((res) => {
+        this.onResponse(res.data);
+      })
+      .catch((e) => {
+        if (isAxiosError(e)) console.error(e);
+      });
   }
 }

@@ -18,7 +18,7 @@ export function ToggleButton({ state, disabled = false, ...props }: ToggleButton
   if (!disabled) text = state ? 'Aktív' : 'Inaktív';
   return (
     <View style={styles.container}>
-      <Text numberOfLines={1} style={[styles.text, { color: gray }]}>
+      <Text numberOfLines={1} style={[styles.text]}>
         {text}
       </Text>
       <Pressable style={[styles.button, { backgroundColor: color, shadowColor: color }]} {...props}>
@@ -30,7 +30,7 @@ export function ToggleButton({ state, disabled = false, ...props }: ToggleButton
 
 const styles = StyleSheet.create({
   container: { justifyContent: 'center', alignItems: 'center', flex: 1, marginHorizontal: 10 },
-  text: { marginBottom: 30, fontSize: 30, textAlign: 'center' },
+  text: { marginBottom: 30, fontSize: 30, textAlign: 'center', opacity: 0.3 },
   button: {
     borderRadius: 50,
     height: 100,
@@ -43,5 +43,6 @@ const styles = StyleSheet.create({
     },
     shadowRadius: 10,
     shadowOpacity: 0.8,
+    elevation: 10,
   },
 });

@@ -1,5 +1,5 @@
 import { LocationObject } from 'expo-location';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { DataDisplay } from '../components/DataDisplay';
 import { Screen } from '../components/Screen';
@@ -13,38 +13,40 @@ import { LocationDisplayService } from '../service/locationDisplayService';
 import { LocationTaskService } from '../service/locationTaskService';
 import { NotificationService } from '../service/notificationService';
 import { PublishService } from '../service/publishService';
-
-const locationService = new LocationTaskService();
-const publishService = new PublishService();
-const notificationService = new NotificationService();
+import { LocationApiResponse } from '../types/locationResponse.type';
 
 export default function Index() {
   const { endpoint, key } = useSettingsContext();
 
   const [state, setState] = useState(false);
+  const [apiResponse, setApiResponse] = useState<LocationApiResponse>();
   const [location, setLocation] = useState<LocationObject>();
+
+  const publishService = useRef(new PublishService(setApiResponse));
+  const locationService = useRef(new LocationTaskService());
+  const notificationService = useRef(new NotificationService());
 
   useEffect(() => {
     if (state) {
-      locationService.start();
-      notificationService.show();
+      locationService.current.start();
+      notificationService.current.show();
     } else {
-      locationService.stop();
-      notificationService.dismiss();
+      locationService.current.stop();
+      notificationService.current.dismiss();
     }
   }, [state]);
 
   useEffect(() => {
-    locationService.addSubscriber(new LocationDisplayService(setLocation));
-    locationService.addSubscriber(publishService);
+    locationService.current.addSubscriber(new LocationDisplayService(setLocation));
+    locationService.current.addSubscriber(publishService.current);
   }, []);
 
   useEffect(() => {
-    publishService.setKey(key);
+    publishService.current.setKey(key);
   }, [key]);
 
   useEffect(() => {
-    publishService.setEndpoint(endpoint);
+    publishService.current.setEndpoint(endpoint);
   }, [endpoint]);
 
   const backgroundColor = useThemeColor({}, 'screenBackground');
@@ -56,7 +58,7 @@ export default function Index() {
         <SettingsButton />
       </TitleBar>
       <ToggleButton disabled={!key || !endpoint} state={state} onPress={() => setState((cs) => !cs)} />
-      <DataDisplay location={location} visible={state} />
+      <DataDisplay apiResponse={apiResponse} location={location} visible={state} />
     </Screen>
   );
 }

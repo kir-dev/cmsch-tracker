@@ -1,22 +1,29 @@
 import { LocationObject } from 'expo-location';
 import { StyleSheet, View } from 'react-native';
 
-import { Text, useThemeColor } from './Themed';
+import { LocationApiResponse } from '../types/locationResponse.type';
+import { Text, TextProps } from './Themed';
 
 interface DataDisplayProps {
+  apiResponse?: LocationApiResponse;
   location?: LocationObject;
   visible: boolean;
 }
 
-export function DataDisplay({ location, visible }: DataDisplayProps) {
-  const gray = useThemeColor({}, 'border');
+export function DataDisplay({ apiResponse, location, visible }: DataDisplayProps) {
   return (
-    <View style={[styles.container, { opacity: visible ? 1 : 0 }]}>
-      <Text style={[styles.text, { color: gray }]}>Pontosság: {'~' + location?.coords.accuracy + 'm' ?? '-'}</Text>
-      <Text style={[styles.text, { color: gray }]}>{location?.coords.latitude ?? '-'}°</Text>
-      <Text style={[styles.text, { color: gray }]}>{location?.coords.longitude ?? '-'}°</Text>
+    <View style={[styles.container, { opacity: visible ? 0.3 : 0 }]}>
+      <DataRecord>Csoport: {apiResponse?.group ?? '-'}</DataRecord>
+      <DataRecord>Státusz: {apiResponse?.status ?? '-'}</DataRecord>
+      <DataRecord>Pontosság: {'~' + location?.coords.accuracy + 'm' ?? '-'}</DataRecord>
+      <DataRecord>{location?.coords.latitude ?? '-'}°</DataRecord>
+      <DataRecord>{location?.coords.longitude ?? '-'}°</DataRecord>
     </View>
   );
+}
+
+function DataRecord({ style, ...props }: TextProps) {
+  return <Text style={[styles.text, style]} {...props} />;
 }
 
 const styles = StyleSheet.create({
