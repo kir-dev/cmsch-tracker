@@ -19,7 +19,7 @@
         "usesNonExemptEncryption": false
       },
       "supportsTablet": true,
-      "bundleIdentifier": "hu.kirdev.bacon",
+      "bundleIdentifier": "hu.kirdev.cmschTracker",
       "buildNumber": "1",
       "infoPlist": {
         "UIBackgroundModes": ["location", "fetch"],
@@ -27,7 +27,7 @@
       }
     },
     "android": {
-      "package": "hu.kirdev.bacon",
+      "package": "hu.kirdev.cmschTracker",
       "icon": "./assets/images/rounded-icon.png",
       "permissions": [
         "ACCESS_BACKGROUND_LOCATION",
