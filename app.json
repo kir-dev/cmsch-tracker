@@ -3,7 +3,7 @@
     "owner": "berenteb",
     "name": "CMSch Bacon",
     "slug": "cmsch-tracker",
-    "scheme": "bacon",
+    "scheme": "cmsch-tracker",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -13,16 +13,21 @@
       "resizeMode": "contain",
       "backgroundColor": "#EDF2F7"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "config": {
         "usesNonExemptEncryption": false
       },
       "supportsTablet": true,
       "bundleIdentifier": "hu.kirdev.cmschTracker",
-      "buildNumber": "1",
+      "buildNumber": "3",
       "infoPlist": {
-        "UIBackgroundModes": ["location", "fetch"],
+        "UIBackgroundModes": [
+          "location",
+          "fetch"
+        ],
         "NSLocationAlwaysAndWhenInUseUsageDescription": "Engedélyezd az $(PRODUCT_NAME) számára, hogy a jelenlegi helyzetedet beküldje a beállított szerverre!"
       }
     },
@@ -38,9 +43,13 @@
       ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#52155A"
+        "backgroundColor": "#EDF2F7"
       },
-      "versionCode": 1
+      "versionCode": 3
+    },
+    "notification": {
+      "icon": "./assets/images/notification-icon.png",
+      "color": "#EDF2F7"
     },
     "plugins": [
       [
