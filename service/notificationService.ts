@@ -1,11 +1,12 @@
 import * as Notifications from 'expo-notifications';
 import { IosAuthorizationStatus } from 'expo-notifications';
+import { Platform } from 'react-native';
 
 export class NotificationService {
   private notificationId: string | undefined;
   private enabled: boolean = false;
   constructor() {
-    this.setup();
+    if (Platform.OS === 'ios') this.setup();
   }
 
   async setup() {

@@ -67,6 +67,10 @@ export class LocationTaskService {
         timeInterval: 5000,
         distanceInterval: 50,
         showsBackgroundLocationIndicator: true,
+        foregroundService: {
+          notificationTitle: 'CMSch Tracking',
+          notificationBody: 'Követés folyamatban',
+        },
       });
 
       return await hasStartedLocationUpdatesAsync(LOCATION_TASK_NAME);
