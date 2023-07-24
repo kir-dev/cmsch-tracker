@@ -13,6 +13,8 @@ export const SettingsContext = createContext<SettingsContextType | undefined>(un
 
 const STORAGE_KEY = '@cmsch-tracker';
 
+SplashScreen.preventAutoHideAsync();
+
 export function SettingsProvider({ children }: PropsWithChildren) {
   const [endpoint, setEndpoint] = useState<SettingsContextType['endpoint']>('');
   const [key, setKey] = useState<SettingsContextType['key']>('');
@@ -47,6 +49,12 @@ export function SettingsProvider({ children }: PropsWithChildren) {
     saveData();
   }, [endpoint, key]);
 
+  useEffect(() => {
+    if (!storageLoading) SplashScreen.hideAsync();
+  }, [storageLoading]);
+
+  if (storageLoading) return null;
+
   return (
     <SettingsContext.Provider
       value={{
@@ -56,7 +64,7 @@ export function SettingsProvider({ children }: PropsWithChildren) {
         setKey,
       }}
     >
-      {storageLoading ? <SplashScreen /> : children}
+      {children}
     </SettingsContext.Provider>
   );
 }
