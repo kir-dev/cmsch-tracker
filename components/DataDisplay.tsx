@@ -15,7 +15,9 @@ export function DataDisplay({ apiResponse, location, visible }: DataDisplayProps
     <View style={[styles.container, { opacity: visible ? 0.3 : 0 }]}>
       <DataRecord>Csoport: {apiResponse?.group ?? '-'}</DataRecord>
       <DataRecord>Státusz: {apiResponse?.status ?? '-'}</DataRecord>
-      <DataRecord>Pontosság: {'~' + location?.coords.accuracy + 'm' ?? '-'}</DataRecord>
+      <DataRecord>
+        Pontosság: {location?.coords.accuracy ? '~' + Math.floor(location.coords.accuracy) + 'm' : '-'}
+      </DataRecord>
       <DataRecord>{location?.coords.latitude ?? '-'}°</DataRecord>
       <DataRecord>{location?.coords.longitude ?? '-'}°</DataRecord>
     </View>
