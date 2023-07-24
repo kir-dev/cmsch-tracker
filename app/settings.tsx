@@ -5,12 +5,16 @@ import { BackButton } from '../components/BackButton';
 import { Button } from '../components/Button';
 import { Content } from '../components/Content';
 import { InputField } from '../components/form/InputField';
+import { PasteBadge } from '../components/PasteBadge';
 import { Screen } from '../components/Screen';
 import { ScreenTitle } from '../components/ScreenTitle';
 import { useSettingsContext } from '../components/SettingsContext';
 import { TitleBar } from '../components/TitleBar';
+import { useSettingsQueryParams } from '../utils/useSettingsQueryParams';
 
 export default function Settings() {
+  const queryParams = useSettingsQueryParams();
+
   const { setKey, key, setEndpoint, endpoint } = useSettingsContext();
   const [endpointValue, setEndpointValue] = useState(endpoint);
   const [keyValue, setKeyValue] = useState(key);
@@ -22,6 +26,16 @@ export default function Settings() {
     setKey(keyValue);
     back();
   };
+
+  const onPasteFromQueryParams = () => {
+    if (queryParams.endpoint && typeof queryParams.endpoint === 'string') setEndpointValue(queryParams.endpoint);
+    if (queryParams.key && typeof queryParams.key === 'string') setKeyValue(queryParams.key);
+  };
+
+  const showPasteBadge =
+    (queryParams.endpoint || queryParams.key) &&
+    (queryParams.key !== keyValue || queryParams.endpoint !== endpointValue);
+
   return (
     <Screen>
       <TitleBar>
@@ -38,6 +52,7 @@ export default function Settings() {
         <InputField value={keyValue} onChangeText={setKeyValue} label='Azonosító' />
         <Button onPress={onSave}>Mentés</Button>
       </Content>
+      {showPasteBadge && <PasteBadge onPress={onPasteFromQueryParams} />}
     </Screen>
   );
 }

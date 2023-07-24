@@ -12,6 +12,7 @@ export default {
     tint: themeColor,
     red: '#E53E3E',
     green: '#38A169',
+    blue: '#0FB7E6',
   },
   dark: {
     theme: themeColorDark,
@@ -23,5 +24,6 @@ export default {
     tint: themeColorDark,
     red: '#F56565',
     green: '#68D391',
+    blue: '#42c1e5',
   },
 };
