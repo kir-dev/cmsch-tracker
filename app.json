@@ -20,7 +20,7 @@
       },
       "supportsTablet": true,
       "bundleIdentifier": "hu.kirdev.cmschTracker",
-      "buildNumber": "4",
+      "buildNumber": "5",
       "infoPlist": {
         "UIBackgroundModes": ["location", "fetch"],
         "NSLocationAlwaysAndWhenInUseUsageDescription": "Engedélyezd az $(PRODUCT_NAME) számára, hogy a jelenlegi helyzetedet beküldje a beállított szerverre!"
