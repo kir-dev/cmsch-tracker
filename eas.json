@@ -9,15 +9,13 @@
       "distribution": "internal",
       "ios": {
         "resourceClass": "m1-medium"
-      },
-      "channel": "development"
+      }
     },
     "preview": {
       "distribution": "internal",
       "ios": {
         "resourceClass": "m1-medium"
-      },
-      "channel": "preview"
+      }
     },
     "production": {
       "android": {
@@ -26,8 +24,7 @@
       "ios": {
         "resourceClass": "m1-medium",
         "autoIncrement": true
-      },
-      "channel": "production"
+      }
     }
   },
   "submit": {
