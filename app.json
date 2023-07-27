@@ -4,7 +4,7 @@
     "name": "CMSch Bacon",
     "slug": "cmsch-tracker",
     "scheme": "cmsch-tracker",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -20,7 +20,7 @@
       },
       "supportsTablet": true,
       "bundleIdentifier": "hu.kirdev.cmschTracker",
-      "buildNumber": "5",
+      "buildNumber": "6",
       "infoPlist": {
         "UIBackgroundModes": ["location", "fetch"],
         "NSLocationAlwaysAndWhenInUseUsageDescription": "Engedélyezd az $(PRODUCT_NAME) számára, hogy a jelenlegi helyzetedet beküldje a beállított szerverre!"
@@ -40,7 +40,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#EDF2F7"
       },
-      "versionCode": 6
+      "versionCode": 7
     },
     "notification": {
       "icon": "./assets/images/notification-icon.png",
