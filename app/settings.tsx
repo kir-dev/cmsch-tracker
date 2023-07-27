@@ -5,6 +5,7 @@ import { BackButton } from '../components/BackButton';
 import { Button } from '../components/Button';
 import { Content } from '../components/Content';
 import { InputField } from '../components/form/InputField';
+import { Impressum } from '../components/Impressum';
 import { PasteBadge } from '../components/PasteBadge';
 import { Screen } from '../components/Screen';
 import { ScreenTitle } from '../components/ScreenTitle';
@@ -53,6 +54,7 @@ export default function Settings() {
         <Button onPress={onSave}>Mentés</Button>
       </Content>
       {showPasteBadge && <PasteBadge onPress={onPasteFromQueryParams} />}
+      <Impressum />
     </Screen>
   );
 }
