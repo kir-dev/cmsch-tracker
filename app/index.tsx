@@ -24,26 +24,28 @@ export default function Index() {
   const { endpoint, key } = useSettingsContext();
   const backgroundColor = useThemeColor({}, 'screenBackground');
 
-  const [state, setState] = useState(false);
+  const [active, setActive] = useState(false);
   const [apiResponse, setApiResponse] = useState<LocationApiResponse>();
+  const [apiError, setApiError] = useState<Error>();
   const [location, setLocation] = useState<LocationObject>();
 
-  const publishService = useRef(new PublishService(setApiResponse));
+  const publishService = useRef(new PublishService(setApiResponse, setApiError));
   const locationService = useRef(new LocationTaskService());
   const notificationService = useRef(new NotificationService());
+  const locationDisplayService = useRef(new LocationDisplayService(setLocation));
 
   useEffect(() => {
-    if (state) {
+    if (active) {
       locationService.current.start();
       notificationService.current.show();
     } else {
       locationService.current.stop();
       notificationService.current.dismiss();
     }
-  }, [state]);
+  }, [active]);
 
   useEffect(() => {
-    locationService.current.addSubscriber(new LocationDisplayService(setLocation));
+    locationService.current.addSubscriber(locationDisplayService.current);
     locationService.current.addSubscriber(publishService.current);
   }, []);
 
@@ -60,14 +62,18 @@ export default function Index() {
       push({ pathname: 'settings', params: queryParams });
   }, [queryParams]);
 
+  useEffect(() => {
+    setApiError(undefined);
+  }, [apiResponse]);
+
   return (
     <Screen style={{ backgroundColor }}>
       <TitleBar>
         <ScreenTitle>B(e)acon</ScreenTitle>
         <SettingsButton />
       </TitleBar>
-      <ToggleButton disabled={!key || !endpoint} state={state} onPress={() => setState((cs) => !cs)} />
-      <DataDisplay apiResponse={apiResponse} location={location} visible={state} />
+      <ToggleButton disabled={!key || !endpoint} state={active} onPress={() => setActive((cs) => !cs)} />
+      <DataDisplay apiResponse={apiResponse} location={location} error={apiError} visible={active} />
     </Screen>
   );
 }

@@ -1,4 +1,4 @@
-import axios, { isAxiosError } from 'axios';
+import axios from 'axios';
 import { LocationObject } from 'expo-location';
 
 import { LocationApiResponse } from '../types/locationResponse.type';
@@ -8,7 +8,10 @@ export class PublishService implements LocationSubscriber {
   private endpoint: string | undefined;
   private key: string | undefined;
 
-  constructor(private onResponse: (responseData: LocationApiResponse) => void) {}
+  constructor(
+    private onResponse: (responseData: LocationApiResponse) => void,
+    private onError: (error: Error) => void
+  ) {}
 
   setEndpoint(endpoint: string) {
     this.endpoint = endpoint;
@@ -29,8 +32,6 @@ export class PublishService implements LocationSubscriber {
       .then((res) => {
         this.onResponse(res.data);
       })
-      .catch((e) => {
-        if (isAxiosError(e)) console.error(e);
-      });
+      .catch(this.onError);
   }
 }
