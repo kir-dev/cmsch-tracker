@@ -20,7 +20,7 @@
       },
       "supportsTablet": true,
       "bundleIdentifier": "hu.kirdev.cmschTracker",
-      "buildNumber": "6",
+      "buildNumber": "7",
       "infoPlist": {
         "UIBackgroundModes": ["location", "fetch"]
       }
@@ -39,7 +39,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#EDF2F7"
       },
-      "versionCode": 7
+      "versionCode": 8
     },
     "notification": {
       "icon": "./assets/images/notification-icon.png",
