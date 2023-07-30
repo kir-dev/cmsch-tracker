@@ -68,8 +68,8 @@ export class LocationTaskService {
         distanceInterval: 20,
         showsBackgroundLocationIndicator: true,
         foregroundService: {
-          notificationTitle: 'CMSch Tracking',
-          notificationBody: 'Követés folyamatban',
+          notificationTitle: 'CMSch követés aktív',
+          notificationBody: 'A felhasználók láthatják a helyzeted!',
         },
       });
 
