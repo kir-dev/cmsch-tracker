@@ -1,4 +1,5 @@
 import { LocationObject } from 'expo-location';
+import { useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 
 import { DataDisplay } from '../components/DataDisplay';
@@ -14,9 +15,14 @@ import { LocationTaskService } from '../service/locationTaskService';
 import { NotificationService } from '../service/notificationService';
 import { PublishService } from '../service/publishService';
 import { LocationApiResponse } from '../types/locationResponse.type';
+import { useSettingsQueryParams } from '../utils/useSettingsQueryParams';
 
 export default function Index() {
+  const queryParams = useSettingsQueryParams();
+  const { push } = useRouter();
+
   const { endpoint, key } = useSettingsContext();
+  const backgroundColor = useThemeColor({}, 'screenBackground');
 
   const [state, setState] = useState(false);
   const [apiResponse, setApiResponse] = useState<LocationApiResponse>();
@@ -49,7 +55,10 @@ export default function Index() {
     publishService.current.setEndpoint(endpoint);
   }, [endpoint]);
 
-  const backgroundColor = useThemeColor({}, 'screenBackground');
+  useEffect(() => {
+    if ((queryParams.endpoint && queryParams.endpoint !== endpoint) || (queryParams.key && queryParams.key !== key))
+      push({ pathname: 'settings', params: queryParams });
+  }, [queryParams]);
 
   return (
     <Screen style={{ backgroundColor }}>

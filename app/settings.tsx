@@ -11,11 +11,10 @@ import { Screen } from '../components/Screen';
 import { ScreenTitle } from '../components/ScreenTitle';
 import { useSettingsContext } from '../components/SettingsContext';
 import { TitleBar } from '../components/TitleBar';
-import { useSettingsQueryParams } from '../utils/useSettingsQueryParams';
+import { useSettingsSearchParams } from '../utils/useSettingsSearchParams';
 
 export default function Settings() {
-  const queryParams = useSettingsQueryParams();
-
+  const searchParams = useSettingsSearchParams();
   const { setKey, key, setEndpoint, endpoint } = useSettingsContext();
   const [endpointValue, setEndpointValue] = useState(endpoint);
   const [keyValue, setKeyValue] = useState(key);
@@ -29,13 +28,13 @@ export default function Settings() {
   };
 
   const onPasteFromQueryParams = () => {
-    if (queryParams.endpoint && typeof queryParams.endpoint === 'string') setEndpointValue(queryParams.endpoint);
-    if (queryParams.key && typeof queryParams.key === 'string') setKeyValue(queryParams.key);
+    if (searchParams.endpoint && typeof searchParams.endpoint === 'string') setEndpointValue(searchParams.endpoint);
+    if (searchParams.key && typeof searchParams.key === 'string') setKeyValue(searchParams.key);
   };
 
   const showPasteBadge =
-    (queryParams.endpoint || queryParams.key) &&
-    (queryParams.key !== keyValue || queryParams.endpoint !== endpointValue);
+    (searchParams.endpoint && searchParams.endpoint !== endpointValue) ||
+    (searchParams.key && searchParams.key !== keyValue);
 
   return (
     <Screen>
