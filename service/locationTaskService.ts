@@ -65,7 +65,7 @@ export class LocationTaskService {
       await startLocationUpdatesAsync(LOCATION_TASK_NAME, {
         accuracy: Accuracy.Highest,
         timeInterval: 5000,
-        distanceInterval: 50,
+        distanceInterval: 20,
         showsBackgroundLocationIndicator: true,
         foregroundService: {
           notificationTitle: 'CMSch Tracking',
