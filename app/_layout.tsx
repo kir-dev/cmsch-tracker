@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
+import { LocationDisclosureModal } from '../components/LocationDisclosure';
 import { SettingsProvider } from '../components/SettingsContext';
 
 export { ErrorBoundary } from '../components/ErrorBoundary';
@@ -38,6 +39,7 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <SettingsProvider>
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <LocationDisclosureModal />
           <Stack screenOptions={{ headerShown: false }}>
             <Stack.Screen name='index' />
             <Stack.Screen name='settings' />

@@ -1,9 +1,9 @@
 import {
   Accuracy,
+  getBackgroundPermissionsAsync,
+  getForegroundPermissionsAsync,
   hasStartedLocationUpdatesAsync,
   LocationObject,
-  requestBackgroundPermissionsAsync,
-  requestForegroundPermissionsAsync,
   startLocationUpdatesAsync,
   stopLocationUpdatesAsync,
 } from 'expo-location';
@@ -55,10 +55,10 @@ export class LocationTaskService {
   }
 
   async start() {
-    const { status: foregroundStatus } = await requestForegroundPermissionsAsync();
+    const { status: foregroundStatus } = await getForegroundPermissionsAsync();
     if (foregroundStatus !== 'granted') return false;
 
-    const { status: backgroundStatus } = await requestBackgroundPermissionsAsync();
+    const { status: backgroundStatus } = await getBackgroundPermissionsAsync();
     if (backgroundStatus !== 'granted') return false;
 
     try {

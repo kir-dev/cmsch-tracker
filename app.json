@@ -22,8 +22,7 @@
       "bundleIdentifier": "hu.kirdev.cmschTracker",
       "buildNumber": "6",
       "infoPlist": {
-        "UIBackgroundModes": ["location", "fetch"],
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "Engedélyezd az $(PRODUCT_NAME) számára, hogy a jelenlegi helyzetedet beküldje a beállított szerverre!"
+        "UIBackgroundModes": ["location", "fetch"]
       }
     },
     "android": {
@@ -50,6 +49,7 @@
       [
         "expo-location",
         {
+          "locationWhenInUsePermission": "Engedélyezd az $(PRODUCT_NAME) számára, hogy a jelenlegi helyzetedet beküldje a beállított szerverre!",
           "locationAlwaysPermission": "Engedélyezd az $(PRODUCT_NAME) számára, hogy a jelenlegi helyzetedet beküldje a beállított szerverre!",
           "isIosBackgroundLocationEnabled": true,
           "isAndroidBackgroundLocationEnabled": true
