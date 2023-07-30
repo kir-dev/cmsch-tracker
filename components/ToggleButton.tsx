@@ -12,11 +12,9 @@ export function ToggleButton({ state, ...props }: ToggleButtonProps) {
   const green = useThemeColor({}, 'green');
   const gray = useThemeColor({}, 'border');
   let color = state ? green : red;
+  if (props.disabled) color = gray;
   let text = 'Letiltva';
-  if (props.disabled) {
-    color = gray;
-    text = state ? 'Aktív' : 'Inaktív';
-  }
+  if (!props.disabled) text = state ? 'Aktív' : 'Inaktív';
   return (
     <View style={styles.container}>
       <Text numberOfLines={1} style={[styles.text]}>
