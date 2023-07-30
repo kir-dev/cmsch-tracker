@@ -4,18 +4,19 @@ import { Pressable, PressableProps, StyleSheet, View } from 'react-native';
 import { Text, useThemeColor } from './Themed';
 
 interface ToggleButtonProps extends PressableProps {
-  disabled?: boolean;
   state: boolean;
 }
 
-export function ToggleButton({ state, disabled = false, ...props }: ToggleButtonProps) {
+export function ToggleButton({ state, ...props }: ToggleButtonProps) {
   const red = useThemeColor({}, 'red');
   const green = useThemeColor({}, 'green');
   const gray = useThemeColor({}, 'border');
   let color = state ? green : red;
-  if (disabled) color = gray;
   let text = 'Letiltva';
-  if (!disabled) text = state ? 'Aktív' : 'Inaktív';
+  if (props.disabled) {
+    color = gray;
+    text = state ? 'Aktív' : 'Inaktív';
+  }
   return (
     <View style={styles.container}>
       <Text numberOfLines={1} style={[styles.text]}>
