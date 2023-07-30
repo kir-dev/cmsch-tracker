@@ -21,12 +21,12 @@ export function PermissionItem({ permissionResponse, onClick, label }: Permissio
     iconName = 'shield-alert-outline';
     color = permissionResponse.canAskAgain ? blue : red;
   }
-
+  let clickable = permissionResponse.status !== 'granted' && permissionResponse.canAskAgain;
   return (
     <Pressable onPress={onClick}>
       <View style={styles.container}>
         <MaterialCommunityIcons size={25} name={iconName} color={color} />
-        <Text style={{ color }}>{label}</Text>
+        <Text style={{ color, textDecorationLine: clickable ? 'underline' : 'none' }}>{label}</Text>
       </View>
     </Pressable>
   );

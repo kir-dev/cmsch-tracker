@@ -54,7 +54,7 @@ export function LocationDisclosureModal() {
       <View style={styles.modalContainer}>
         <Content>
           <Text style={styles.title}>Engedélyek</Text>
-          <Text>Az alábbi engedélyezése szükséges a tökéletes működéshez:</Text>
+          <Text>Az alábbiak engedélyezése szükséges a tökéletes működéshez:</Text>
           {foregroundLocationPermission && (
             <PermissionItem
               permissionResponse={foregroundLocationPermission}
@@ -69,6 +69,12 @@ export function LocationDisclosureModal() {
               label='Helyzet háttérben'
             />
           )}
+          <Text
+            onPress={() => Linking.openURL('https://berente.net/privacy/cmsch-tracker')}
+            style={{ textDecorationLine: 'underline' }}
+          >
+            Adatvédelmi tájékoztató
+          </Text>
           {isSettingsActionNeeded && (
             <>
               <Text style={{ color: red }}>
