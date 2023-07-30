@@ -17,7 +17,7 @@ export function DataDisplay({ apiResponse, location, visible, error }: DataDispl
   const green = useThemeColor({}, 'green');
 
   return (
-    <View style={[styles.container, { opacity: visible ? 0.3 : 0 }]}>
+    <View style={[styles.container, { opacity: visible ? 0.5 : 0 }]}>
       <DataRecord>Csoport: {apiResponse?.group ?? '-'}</DataRecord>
       <DataRecord>Státusz: {apiResponse?.status ?? '-'}</DataRecord>
       <DataRecord>

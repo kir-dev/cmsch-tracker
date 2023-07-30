@@ -29,7 +29,7 @@ export function ToggleButton({ state, ...props }: ToggleButtonProps) {
 
 const styles = StyleSheet.create({
   container: { justifyContent: 'center', alignItems: 'center', flex: 1, marginHorizontal: 10 },
-  text: { marginBottom: 30, fontSize: 30, textAlign: 'center', opacity: 0.3 },
+  text: { marginBottom: 30, fontSize: 30, textAlign: 'center', opacity: 0.5 },
   button: {
     borderRadius: 50,
     height: 100,
