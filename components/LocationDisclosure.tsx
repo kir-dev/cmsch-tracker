@@ -54,6 +54,12 @@ export function LocationDisclosureModal() {
       <View style={styles.modalContainer}>
         <Content>
           <Text style={styles.title}>Engedélyek</Text>
+          <Text>
+            Az alkalmazás elküldi a pozíciód a beállított CMSch szervernek a szolgáltatás lokáció alapú funkciójinak
+            működéséhez (Tankörkövetés), előtérben és háttérbe helyezve is. A begyűjtött pozíció nem hozzád, hanem a
+            csoportodhoz van társítva. A gyűjtés aktív, ha a főoldalon található gomb &quot;Aktív&quot; állapotban van,
+            egyéb esetben nem. Lásd az adatvédelmi tájékoztatót a részletekért.
+          </Text>
           <Text>Az alábbiak engedélyezése szükséges a tökéletes működéshez:</Text>
           {foregroundLocationPermission && (
             <PermissionItem
