@@ -31,9 +31,9 @@ export function SettingsProvider({ children }: PropsWithChildren) {
         const storedData = await AsyncStorage.getItem(STORAGE_KEY);
         if (storedData) {
           const storedDataObject = JSON.parse(storedData);
-          setEndpoint(storedDataObject.endpoint);
-          setKey(storedDataObject.key);
-          setMeasurementQuality(storedDataObject.measureQuality);
+          setEndpoint(storedDataObject.endpoint ?? '');
+          setKey(storedDataObject.key ?? '');
+          setMeasurementQuality(storedDataObject.measurementQuality ?? MeasurementQuality.BALANCED);
         }
       } catch (error) {
         console.error('Error loading data:', error);
@@ -46,14 +46,14 @@ export function SettingsProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     const saveData = async () => {
       try {
-        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({ endpoint, key, measureQuality: measurementQuality }));
+        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({ endpoint, key, measurementQuality }));
       } catch (error) {
         console.error('Error saving data:', error);
       }
     };
 
     saveData();
-  }, [endpoint, key]);
+  }, [endpoint, key, measurementQuality]);
 
   useEffect(() => {
     if (!storageLoading) SplashScreen.hideAsync();
