@@ -1,5 +1,4 @@
 import {
-  Accuracy,
   getBackgroundPermissionsAsync,
   getForegroundPermissionsAsync,
   hasStartedLocationUpdatesAsync,
@@ -10,17 +9,28 @@ import {
 import * as TaskManager from 'expo-task-manager';
 
 import { LocationSubscriber } from '../types/locationSubscriber.type';
+import { MeasurementQuality } from '../types/measurementQuality';
+import {
+  getDistanceIntervalForQuality,
+  getTimeIntervalForQuality,
+  MeasureQualityToLocationAccuracy,
+} from '../utils/measurementQuality';
 
 const LOCATION_TASK_NAME = 'background-location-task';
 
 export class LocationTaskService {
   private subscribers: LocationSubscriber[];
   private readonly errorHandler: (e: Error) => void;
+  private measurementQuality: MeasurementQuality = MeasurementQuality.BALANCED;
 
   constructor(onError?: (e: Error) => void) {
     this.subscribers = [];
     this.defineTask();
     this.errorHandler = onError ?? console.error;
+  }
+
+  setMeasurementQuality(quality: MeasurementQuality) {
+    this.measurementQuality = quality;
   }
 
   addSubscriber(subscriber: LocationSubscriber) {
@@ -63,9 +73,9 @@ export class LocationTaskService {
 
     try {
       await startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-        accuracy: Accuracy.Highest,
-        timeInterval: 5000,
-        distanceInterval: 20,
+        accuracy: MeasureQualityToLocationAccuracy[this.measurementQuality],
+        timeInterval: getTimeIntervalForQuality(this.measurementQuality),
+        distanceInterval: getDistanceIntervalForQuality(this.measurementQuality),
         showsBackgroundLocationIndicator: true,
         foregroundService: {
           notificationTitle: 'CMSch követés aktív',
@@ -73,7 +83,7 @@ export class LocationTaskService {
         },
       });
 
-      return await hasStartedLocationUpdatesAsync(LOCATION_TASK_NAME);
+      return this.isRunning();
     } catch (e) {
       console.error(e);
     }
@@ -83,6 +93,24 @@ export class LocationTaskService {
   async stop() {
     try {
       await stopLocationUpdatesAsync(LOCATION_TASK_NAME);
+      return await hasStartedLocationUpdatesAsync(LOCATION_TASK_NAME);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async refresh() {
+    if (!(await this.isRunning())) return false;
+    try {
+      await this.stop();
+      return await this.start();
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async isRunning() {
+    try {
       return await hasStartedLocationUpdatesAsync(LOCATION_TASK_NAME);
     } catch (e) {
       return false;

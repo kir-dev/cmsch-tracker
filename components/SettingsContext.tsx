@@ -2,11 +2,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SplashScreen } from 'expo-router';
 import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useEffect, useState } from 'react';
 
+import { MeasurementQuality } from '../types/measurementQuality';
+
 type SettingsContextType = {
   endpoint: string;
   setEndpoint: Dispatch<SetStateAction<string>>;
   key: string;
   setKey: Dispatch<SetStateAction<string>>;
+  measurementQuality: MeasurementQuality;
+  setMeasureQuality: Dispatch<SetStateAction<MeasurementQuality>>;
 };
 
 export const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
@@ -18,6 +22,7 @@ SplashScreen.preventAutoHideAsync();
 export function SettingsProvider({ children }: PropsWithChildren) {
   const [endpoint, setEndpoint] = useState<SettingsContextType['endpoint']>('');
   const [key, setKey] = useState<SettingsContextType['key']>('');
+  const [measurementQuality, setMeasurementQuality] = useState<MeasurementQuality>(MeasurementQuality.BALANCED);
   const [storageLoading, setStorageLoading] = useState(true);
 
   useEffect(() => {
@@ -26,8 +31,9 @@ export function SettingsProvider({ children }: PropsWithChildren) {
         const storedData = await AsyncStorage.getItem(STORAGE_KEY);
         if (storedData) {
           const storedDataObject = JSON.parse(storedData);
-          setEndpoint(storedDataObject.endpoint);
-          setKey(storedDataObject.key);
+          setEndpoint(storedDataObject.endpoint ?? '');
+          setKey(storedDataObject.key ?? '');
+          setMeasurementQuality(storedDataObject.measurementQuality ?? MeasurementQuality.BALANCED);
         }
       } catch (error) {
         console.error('Error loading data:', error);
@@ -40,14 +46,14 @@ export function SettingsProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     const saveData = async () => {
       try {
-        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({ endpoint, key }));
+        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({ endpoint, key, measurementQuality }));
       } catch (error) {
         console.error('Error saving data:', error);
       }
     };
 
     saveData();
-  }, [endpoint, key]);
+  }, [endpoint, key, measurementQuality]);
 
   useEffect(() => {
     if (!storageLoading) SplashScreen.hideAsync();
@@ -62,6 +68,8 @@ export function SettingsProvider({ children }: PropsWithChildren) {
         setEndpoint,
         key,
         setKey,
+        measurementQuality,
+        setMeasureQuality: setMeasurementQuality,
       }}
     >
       {children}
