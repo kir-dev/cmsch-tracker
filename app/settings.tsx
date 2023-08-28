@@ -12,7 +12,7 @@ import { Screen } from '../components/Screen';
 import { ScreenTitle } from '../components/ScreenTitle';
 import { useSettingsContext } from '../components/SettingsContext';
 import { TitleBar } from '../components/TitleBar';
-import { MeasureQualityLabels } from '../types/measurementQuality';
+import { MeasureQualityLabels } from '../utils/measurementQuality';
 import { useSettingsSearchParams } from '../utils/useSettingsSearchParams';
 
 export default function Settings() {

@@ -21,7 +21,7 @@ export default function Index() {
   const queryParams = useSettingsQueryParams();
   const { push } = useRouter();
 
-  const { endpoint, key } = useSettingsContext();
+  const { endpoint, key, measurementQuality } = useSettingsContext();
   const backgroundColor = useThemeColor({}, 'screenBackground');
 
   const [active, setActive] = useState(false);
@@ -56,6 +56,11 @@ export default function Index() {
   useEffect(() => {
     publishService.current.setEndpoint(endpoint);
   }, [endpoint]);
+
+  useEffect(() => {
+    locationService.current.setMeasurementQuality(measurementQuality);
+    locationService.current.refresh().then(() => console.log('Refreshed location service'));
+  }, [measurementQuality]);
 
   useEffect(() => {
     if ((queryParams.endpoint && queryParams.endpoint !== endpoint) || (queryParams.key && queryParams.key !== key))
