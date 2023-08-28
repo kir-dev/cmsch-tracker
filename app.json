@@ -4,7 +4,7 @@
     "name": "CMSch Bacon",
     "slug": "cmsch-tracker",
     "scheme": "cmsch-tracker",
-    "version": "1.1.3",
+    "version": "1.1.4",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
