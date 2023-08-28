@@ -12,22 +12,22 @@ import { Screen } from '../components/Screen';
 import { ScreenTitle } from '../components/ScreenTitle';
 import { useSettingsContext } from '../components/SettingsContext';
 import { TitleBar } from '../components/TitleBar';
-import { MeasureQualityLabels } from '../types/measureQuality';
+import { MeasureQualityLabels } from '../types/measurementQuality';
 import { useSettingsSearchParams } from '../utils/useSettingsSearchParams';
 
 export default function Settings() {
   const searchParams = useSettingsSearchParams();
-  const { setKey, key, setEndpoint, endpoint, setMeasureQuality, measureQuality } = useSettingsContext();
+  const { setKey, key, setEndpoint, endpoint, setMeasureQuality, measurementQuality } = useSettingsContext();
   const [endpointValue, setEndpointValue] = useState(endpoint);
   const [keyValue, setKeyValue] = useState(key);
-  const [measureQualityValue, setMeasureQualityValue] = useState(measureQuality);
+  const [measurementQualityValue, setMeasurementQualityValue] = useState(measurementQuality);
 
   const { back } = useRouter();
 
   const onSave = () => {
     setEndpoint(endpointValue);
     setKey(keyValue);
-    setMeasureQuality(measureQualityValue);
+    setMeasureQuality(measurementQualityValue);
     back();
   };
 
@@ -55,13 +55,13 @@ export default function Settings() {
         />
         <InputField value={keyValue} onChangeText={setKeyValue} label='Azonosító' />
         <SliderField
-          value={measureQualityValue}
+          value={measurementQualityValue}
           minimumValue={1}
           maximumValue={5}
           step={1}
-          onValueChange={setMeasureQualityValue}
+          onValueChange={setMeasurementQualityValue}
           label='Mérés minősége'
-          helperText={MeasureQualityLabels[measureQualityValue]}
+          helperText={MeasureQualityLabels[measurementQualityValue]}
           iconBefore='circle-outline'
           iconAfter='circle-medium'
         />
