@@ -2,11 +2,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SplashScreen } from 'expo-router';
 import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useEffect, useState } from 'react';
 
+import { MeasureQuality } from '../types/measureQuality';
+
 type SettingsContextType = {
   endpoint: string;
   setEndpoint: Dispatch<SetStateAction<string>>;
   key: string;
   setKey: Dispatch<SetStateAction<string>>;
+  measureQuality: MeasureQuality;
+  setMeasureQuality: Dispatch<SetStateAction<MeasureQuality>>;
 };
 
 export const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
@@ -18,6 +22,7 @@ SplashScreen.preventAutoHideAsync();
 export function SettingsProvider({ children }: PropsWithChildren) {
   const [endpoint, setEndpoint] = useState<SettingsContextType['endpoint']>('');
   const [key, setKey] = useState<SettingsContextType['key']>('');
+  const [measureQuality, setMeasureQuality] = useState<MeasureQuality>(MeasureQuality.BALANCED);
   const [storageLoading, setStorageLoading] = useState(true);
 
   useEffect(() => {
@@ -28,6 +33,7 @@ export function SettingsProvider({ children }: PropsWithChildren) {
           const storedDataObject = JSON.parse(storedData);
           setEndpoint(storedDataObject.endpoint);
           setKey(storedDataObject.key);
+          setMeasureQuality(storedDataObject.measureQuality);
         }
       } catch (error) {
         console.error('Error loading data:', error);
@@ -40,7 +46,7 @@ export function SettingsProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     const saveData = async () => {
       try {
-        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({ endpoint, key }));
+        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({ endpoint, key, measureQuality }));
       } catch (error) {
         console.error('Error saving data:', error);
       }
@@ -62,6 +68,8 @@ export function SettingsProvider({ children }: PropsWithChildren) {
         setEndpoint,
         key,
         setKey,
+        measureQuality,
+        setMeasureQuality,
       }}
     >
       {children}
