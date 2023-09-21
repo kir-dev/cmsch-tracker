@@ -7,6 +7,7 @@ import { LocationSubscriber } from '../types/locationSubscriber.type';
 export class PublishService implements LocationSubscriber {
   private endpoint: string | undefined;
   private key: string | undefined;
+  private broadcastEnabled: boolean = false;
 
   constructor(
     private onResponse: (responseData: LocationApiResponse) => void,
@@ -21,12 +22,16 @@ export class PublishService implements LocationSubscriber {
     this.key = key;
   }
 
+  setBroadcastEnabled(broadcastEnabled: boolean) {
+    this.broadcastEnabled = broadcastEnabled;
+  }
+
   sendLocation({ coords: { accuracy = 0, latitude, longitude, altitude = 0 } }: LocationObject) {
     if (!this.endpoint || !this.key) throw new Error('Kulcs vagy végpont hiányzik');
     axios
       .post<LocationApiResponse>(
         this.endpoint,
-        { accuracy, latitude, longitude, altitude, token: this.key },
+        { accuracy, latitude, longitude, altitude, token: this.key, broadcastEnabled: this.broadcastEnabled },
         { headers: { 'Content-Type': 'application/json' } }
       )
       .then((res) => {

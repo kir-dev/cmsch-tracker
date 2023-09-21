@@ -6,6 +6,7 @@ import { Button } from '../components/Button';
 import { Content } from '../components/Content';
 import { InputField } from '../components/form/InputField';
 import { SliderField } from '../components/form/SliderField';
+import { SwitchField } from '../components/form/SwitchField';
 import { Impressum } from '../components/Impressum';
 import { PasteBadge } from '../components/PasteBadge';
 import { Screen } from '../components/Screen';
@@ -17,10 +18,20 @@ import { useSettingsSearchParams } from '../utils/useSettingsSearchParams';
 
 export default function Settings() {
   const searchParams = useSettingsSearchParams();
-  const { setKey, key, setEndpoint, endpoint, setMeasureQuality, measurementQuality } = useSettingsContext();
+  const {
+    setKey,
+    key,
+    setEndpoint,
+    endpoint,
+    setMeasureQuality,
+    measurementQuality,
+    broadcastEnabled,
+    setBroadcastEnabled,
+  } = useSettingsContext();
   const [endpointValue, setEndpointValue] = useState(endpoint);
   const [keyValue, setKeyValue] = useState(key);
   const [measurementQualityValue, setMeasurementQualityValue] = useState(measurementQuality);
+  const [broadcastEnabledValue, setBroadcastEnabledValue] = useState(broadcastEnabled);
 
   const { back } = useRouter();
 
@@ -28,6 +39,7 @@ export default function Settings() {
     setEndpoint(endpointValue);
     setKey(keyValue);
     setMeasureQuality(measurementQualityValue);
+    setBroadcastEnabled(broadcastEnabledValue);
     back();
   };
 
@@ -54,6 +66,7 @@ export default function Settings() {
           label='Szerver végpont'
         />
         <InputField value={keyValue} onChangeText={setKeyValue} label='Azonosító' />
+        <SwitchField value={broadcastEnabledValue} onValueChange={setBroadcastEnabledValue} label='Közvetítés' />
         <SliderField
           value={measurementQualityValue}
           minimumValue={1}

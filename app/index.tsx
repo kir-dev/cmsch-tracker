@@ -21,7 +21,7 @@ export default function Index() {
   const queryParams = useSettingsQueryParams();
   const { push } = useRouter();
 
-  const { endpoint, key, measurementQuality } = useSettingsContext();
+  const { endpoint, key, measurementQuality, broadcastEnabled } = useSettingsContext();
   const backgroundColor = useThemeColor({}, 'screenBackground');
 
   const [active, setActive] = useState(false);
@@ -48,6 +48,10 @@ export default function Index() {
     locationService.current.addSubscriber(locationDisplayService.current);
     locationService.current.addSubscriber(publishService.current);
   }, []);
+
+  useEffect(() => {
+    publishService.current.setBroadcastEnabled(broadcastEnabled);
+  }, [broadcastEnabled]);
 
   useEffect(() => {
     publishService.current.setKey(key);

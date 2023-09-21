@@ -11,6 +11,8 @@ type SettingsContextType = {
   setKey: Dispatch<SetStateAction<string>>;
   measurementQuality: MeasurementQuality;
   setMeasureQuality: Dispatch<SetStateAction<MeasurementQuality>>;
+  broadcastEnabled: boolean;
+  setBroadcastEnabled: Dispatch<SetStateAction<boolean>>;
 };
 
 export const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
@@ -23,6 +25,7 @@ export function SettingsProvider({ children }: PropsWithChildren) {
   const [endpoint, setEndpoint] = useState<SettingsContextType['endpoint']>('');
   const [key, setKey] = useState<SettingsContextType['key']>('');
   const [measurementQuality, setMeasurementQuality] = useState<MeasurementQuality>(MeasurementQuality.BALANCED);
+  const [broadcastEnabled, setBroadcastEnabled] = useState(false);
   const [storageLoading, setStorageLoading] = useState(true);
 
   useEffect(() => {
@@ -34,6 +37,7 @@ export function SettingsProvider({ children }: PropsWithChildren) {
           setEndpoint(storedDataObject.endpoint ?? '');
           setKey(storedDataObject.key ?? '');
           setMeasurementQuality(storedDataObject.measurementQuality ?? MeasurementQuality.BALANCED);
+          setBroadcastEnabled(storedDataObject.broadcastEnabled ?? false);
         }
       } catch (error) {
         console.error('Error loading data:', error);
@@ -46,7 +50,10 @@ export function SettingsProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     const saveData = async () => {
       try {
-        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({ endpoint, key, measurementQuality }));
+        await AsyncStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify({ endpoint, key, measurementQuality, broadcastEnabled })
+        );
       } catch (error) {
         console.error('Error saving data:', error);
       }
@@ -70,6 +77,8 @@ export function SettingsProvider({ children }: PropsWithChildren) {
         setKey,
         measurementQuality,
         setMeasureQuality: setMeasurementQuality,
+        broadcastEnabled,
+        setBroadcastEnabled,
       }}
     >
       {children}
