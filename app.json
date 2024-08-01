@@ -13,9 +13,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#EDF2F7"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "config": {
         "usesNonExemptEncryption": false
@@ -24,10 +22,7 @@
       "bundleIdentifier": "hu.kirdev.cmschTracker",
       "buildNumber": "11",
       "infoPlist": {
-        "UIBackgroundModes": [
-          "location",
-          "fetch"
-        ]
+        "UIBackgroundModes": ["location", "fetch"]
       }
     },
     "android": {
