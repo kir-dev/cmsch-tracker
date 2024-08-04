@@ -39,7 +39,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#EDF2F7"
       },
-      "versionCode": 12
+      "versionCode": 14
     },
     "notification": {
       "icon": "./assets/images/notification-icon.png",
