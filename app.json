@@ -46,10 +46,6 @@
       },
       "versionCode": 14
     },
-    "notification": {
-      "icon": "./assets/images/notification-icon.png",
-      "color": "#EDF2F7"
-    },
     "plugins": [
       [
         "expo-location",
@@ -58,6 +54,13 @@
           "locationAlwaysPermission": "Engedélyezd az $(PRODUCT_NAME) számára, hogy a jelenlegi helyzetedet beküldje a beállított szerverre!",
           "isIosBackgroundLocationEnabled": true,
           "isAndroidBackgroundLocationEnabled": true
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/notification-icon.png",
+          "color": "#EDF2F7"
         }
       ],
       "expo-font",
